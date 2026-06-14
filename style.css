@@ -267,6 +267,36 @@ section:last-of-type {
     color: var(--text-muted);
 }
 
+.hero-location {
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-top: 0.75rem;
+    color: var(--text-color);
+}
+
+.hero-hours-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-style: italic;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.hero-hours-item {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+}
+
+.hero-hours-item strong {
+    color: var(--text-color);
+}
+
+.hero-hours-item.closed-day {
+    color: var(--accent-color);
+}
+
 .hero-section .divider {
     width: 80px;
     height: 1px;

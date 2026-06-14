@@ -51,118 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateActiveLink);
     updateActiveLink(); // Initial call
 
-    // 3. Opening Hours & Current Status Logic
-    const openingHours = {
-        0: { name: 'Dimanche', slots: [{ start: '08:30', end: '12:30' }] }, // Sunday
-        1: { name: 'Lundi', slots: [] }, // Monday (Closed)
-        2: { name: 'Mardi', slots: [{ start: '08:00', end: '13:00' }, { start: '15:30', end: '19:00' }] },
-        3: { name: 'Mercredi', slots: [{ start: '08:00', end: '13:00' }, { start: '15:30', end: '19:00' }] },
-        4: { name: 'Jeudi', slots: [{ start: '08:00', end: '13:00' }, { start: '15:30', end: '19:00' }] },
-        5: { name: 'Vendredi', slots: [{ start: '08:00', end: '13:00' }, { start: '15:30', end: '19:00' }] },
-        6: { name: 'Samedi', slots: [{ start: '08:00', end: '13:00' }, { start: '15:30', end: '19:00' }] }
-    };
-
-    function highlightCurrentDayInTable(currentDayIndex) {
-        const rowId = `day-${currentDayIndex}`;
+    // 3. Opening Hours Highlight Logic
+    function highlightCurrentDayInTable() {
+        const now = new Date();
+        const day = now.getDay(); // 0 is Sunday, 1 is Monday, etc.
+        const rowId = `day-${day}`;
         const currentRow = document.getElementById(rowId);
         if (currentRow) {
             currentRow.classList.add('current-day');
         }
     }
 
-    function checkOpenStatus() {
-        const now = new Date();
-        const day = now.getDay(); // 0 is Sunday, 1 is Monday, etc.
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const currentTimeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-        
-        // Highlight current day in footer/main table
-        highlightCurrentDayInTable(day);
-
-        const statusDot = document.getElementById('status-dot');
-        const statusText = document.getElementById('status-text');
-        const hoursSummary = document.getElementById('hours-summary');
-
-        if (!statusDot || !statusText || !hoursSummary) return;
-
-        const todaySchedule = openingHours[day];
-        
-        // Format today's hours for display
-        let hoursDisplayText = '';
-        if (todaySchedule.slots.length === 0) {
-            hoursDisplayText = "Aujourd'hui : Fermé";
-        } else {
-            hoursDisplayText = "Aujourd'hui : " + todaySchedule.slots.map(slot => `${slot.start} - ${slot.end}`).join(' et ');
-        }
-        hoursSummary.textContent = hoursDisplayText;
-
-        // Check if currently open
-        let isOpen = false;
-        let nextStatusMsg = '';
-
-        if (todaySchedule.slots.length > 0) {
-            for (const slot of todaySchedule.slots) {
-                if (currentTimeString >= slot.start && currentTimeString <= slot.end) {
-                    isOpen = true;
-                    nextStatusMsg = `Ferme à ${slot.end}`;
-                    break;
-                }
-            }
-        }
-
-        if (isOpen) {
-            statusDot.className = 'status-dot open';
-            statusText.textContent = `Ouvert actuellement · ${nextStatusMsg}`;
-            statusText.style.color = '#2ECC71';
-        } else {
-            statusDot.className = 'status-dot closed';
-            
-            // Determine when we open next
-            let foundNext = false;
-            let checkDay = day;
-            let dayOffset = 0;
-
-            while (!foundNext && dayOffset < 7) {
-                const schedule = openingHours[checkDay];
-                
-                // If it's today and we haven't opened yet or are between slots
-                if (dayOffset === 0) {
-                    for (const slot of schedule.slots) {
-                        if (currentTimeString < slot.start) {
-                            nextStatusMsg = `Ouvre aujourd'hui à ${slot.start}`;
-                            foundNext = true;
-                            break;
-                        }
-                    }
-                } else {
-                    // For future days
-                    if (schedule.slots.length > 0) {
-                        const dayName = dayOffset === 1 ? 'demain' : schedule.name.toLowerCase();
-                        nextStatusMsg = `Ouvre ${dayName} à ${schedule.slots[0].start}`;
-                        foundNext = true;
-                        break;
-                    }
-                }
-
-                if (!foundNext) {
-                    checkDay = (checkDay + 1) % 7;
-                    dayOffset++;
-                }
-            }
-
-            if (!foundNext) {
-                statusText.textContent = 'Fermé actuellement';
-            } else {
-                statusText.textContent = `Fermé actuellement · ${nextStatusMsg}`;
-            }
-            statusText.style.color = 'var(--accent-color)';
-        }
-    }
-
-    checkOpenStatus();
-    // Update status check every minute
-    setInterval(checkOpenStatus, 60000);
+    highlightCurrentDayInTable();
 
     // 4. Contact Form Submission
     const contactForm = document.getElementById('contact-form');
