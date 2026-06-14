@@ -109,37 +109,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Simulate PDF Download for Catering Menu
+    // 5. Simulate PDF Download for Catering Menu & FAB
     const downloadLink = document.getElementById('download-link');
-    if (downloadLink) {
-        downloadLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Create a temporary notification element
-            const notification = document.createElement('div');
-            notification.textContent = "Téléchargement de la carte traiteur (simulé) lancé avec succès !";
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.backgroundColor = 'var(--text-color)';
-            notification.style.color = 'var(--bg-color)';
-            notification.style.padding = '0.75rem 1.5rem';
-            notification.style.borderRadius = '4px';
-            notification.style.fontSize = '0.9rem';
-            notification.style.fontWeight = '500';
-            notification.style.zIndex = '2000';
-            notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-            
-            document.body.appendChild(notification);
-            
+    const fabButton = document.getElementById('fab-traiteur');
+
+    function simulateDownload(e) {
+        e.preventDefault();
+        
+        // Create a temporary notification element
+        const notification = document.createElement('div');
+        notification.textContent = "Téléchargement de la carte traiteur (simulé) lancé avec succès !";
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.left = '50%';
+        notification.style.transform = 'translateX(-50%)';
+        notification.style.backgroundColor = 'var(--text-color)';
+        notification.style.color = 'var(--bg-color)';
+        notification.style.padding = '0.75rem 1.5rem';
+        notification.style.borderRadius = '4px';
+        notification.style.fontSize = '0.9rem';
+        notification.style.fontWeight = '500';
+        notification.style.zIndex = '2000';
+        notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.transition = 'opacity 0.5s ease';
+            notification.style.opacity = '0';
             setTimeout(() => {
-                notification.style.transition = 'opacity 0.5s ease';
-                notification.style.opacity = '0';
-                setTimeout(() => {
-                    notification.remove();
-                }, 500);
-            }, 3000);
-        });
+                notification.remove();
+            }, 500);
+        }, 3000);
+    }
+
+    if (downloadLink) {
+        downloadLink.addEventListener('click', simulateDownload);
+    }
+    if (fabButton) {
+        fabButton.addEventListener('click', simulateDownload);
+    }
+
+    // 6. Floating Action Button (FAB) IntersectionObserver Logic
+    const traiteurSection = document.getElementById('traiteur');
+    if (fabButton && traiteurSection) {
+        const observerOptions = {
+            root: null, // viewport
+            threshold: 0.2 // Hide FAB when 20% of the section is visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    fabButton.classList.add('hidden-fab');
+                } else {
+                    fabButton.classList.remove('hidden-fab');
+                }
+            });
+        }, observerOptions);
+
+        observer.observe(traiteurSection);
     }
 });

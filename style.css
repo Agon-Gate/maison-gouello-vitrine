@@ -645,6 +645,49 @@ section:last-of-type {
     border-bottom-color: var(--accent-color);
 }
 
+/* Helper Responsive Classes */
+.mobile-only {
+    display: block;
+}
+
+.desktop-only {
+    display: none;
+}
+
+/* Floating Action Button (FAB) - Mobile defaults */
+.fab-btn {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background-color: var(--accent-color);
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(26, 26, 26, 0.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.fab-btn:hover {
+    background-color: var(--accent-hover);
+    color: #FFFFFF;
+}
+
+.fab-btn.hidden-fab {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
 /* ==========================================================================
    Desktop & Tablet Layout Overrides (breakpoint: 768px)
    ========================================================================== */
@@ -800,5 +843,19 @@ section:last-of-type {
     
     .footer-info {
         max-width: 45%;
+    }
+
+    /* Responsive Helpers & FAB Desktop Overrides */
+    .mobile-only {
+        display: none;
+    }
+    
+    .desktop-only {
+        display: inline;
+    }
+    
+    .fab-btn {
+        bottom: 24px;
+        right: 24px;
     }
 }
