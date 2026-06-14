@@ -1,0 +1,687 @@
+/* ==========================================================================
+   Maison Gouëllo - Design System & Stylesheet (Sober, Terroir Breton, Mobile-First)
+   ========================================================================== */
+
+/* Variables & Custom Properties */
+:root {
+    --bg-color: #F5F0EB;
+    --text-color: #1A1A1A;
+    --text-muted: #555555;
+    --accent-color: #C0392B;
+    --accent-hover: #9E2F23;
+    --border-color: #DCD6CF;
+    --card-bg: #FFFFFF;
+    --card-border: #E8E2DB;
+    --active-row-bg: #EAE4DE;
+    
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    
+    --header-height: 70px;
+    --max-width: 1000px;
+}
+
+/* Reset & Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-color);
+}
+
+p {
+    margin-bottom: 1.5rem;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+/* Common Layout Components */
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+section {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+section:last-of-type {
+    border-bottom: none;
+}
+
+/* Section Dividers & Headings */
+.section-title {
+    font-size: 2.2rem;
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.section-divider {
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    margin: 0 auto 3rem auto;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.85rem 1.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--accent-hover);
+}
+
+.btn-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.main-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.logo-link {
+    display: inline-block;
+}
+
+.logo-text {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+/* Menu Toggle Button (Mobile) */
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1010;
+}
+
+.hamburger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Toggle Menu Active Classes */
+.menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Nav Menu (Mobile Default) */
+.nav-menu {
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+    display: none;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.nav-menu.active {
+    display: block;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-color);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-section {
+    padding: 6rem 0;
+    text-align: center;
+    background-color: var(--bg-color);
+}
+
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.hero-section .divider {
+    width: 80px;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2.5rem 0;
+}
+
+/* Opening Info Card */
+.hero-hours-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 4px 12px rgba(26, 26, 26, 0.03);
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #999999;
+}
+
+.status-dot.open {
+    background-color: #2ECC71;
+}
+
+.status-dot.closed {
+    background-color: var(--accent-color);
+}
+
+.hours-summary {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.hero-link-scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    border-bottom: 1px solid transparent;
+}
+
+.hero-link-scroll:hover {
+    border-bottom-color: var(--accent-color);
+}
+
+.arrow-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* ==========================================================================
+   Qui Sommes-Nous Section
+   ========================================================================== */
+.about-section {
+    background-color: var(--bg-color);
+}
+
+.about-content {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.lead-text {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.body-text {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    text-align: justify;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   Carte Traiteur Section
+   ========================================================================== */
+.traiteur-section {
+    background-color: var(--bg-color);
+    text-align: center;
+}
+
+.traiteur-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.traiteur-tagline {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-color);
+}
+
+.cta-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn-download {
+    width: 100%;
+    max-width: 280px;
+}
+
+.btn-subtext {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Horaires & Contact Section
+   ========================================================================== */
+.hours-contact-section {
+    background-color: var(--bg-color);
+}
+
+.hours-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+}
+
+.subsection-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+/* Hours Table */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.hours-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.hours-table th, .hours-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hours-table th {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.hours-table tr.current-day {
+    background-color: var(--active-row-bg);
+    font-weight: 600;
+    border-left: 3px solid var(--accent-color);
+}
+
+.hours-table tr.current-day td:first-child {
+    padding-left: calc(1rem - 3px);
+}
+
+.day-name {
+    font-weight: 600;
+}
+
+.closed-cell {
+    color: var(--accent-color);
+    font-style: italic;
+}
+
+.hours-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Contact Form */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-group input, .form-group textarea {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    padding: 0.75rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.btn-submit {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.form-feedback {
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-feedback.success {
+    background-color: #E8F8F5;
+    color: #117A65;
+    border: 1px solid #A3E4D7;
+}
+
+.form-feedback.error {
+    background-color: #FDEDEC;
+    color: #B03A2E;
+    border: 1px solid #F9D5D3;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ==========================================================================
+   Footer Section
+   ========================================================================== */
+.main-footer {
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--border-color);
+    padding: 4rem 0 2rem 0;
+    font-size: 0.95rem;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.footer-brand {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+}
+
+.footer-tagline {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.footer-contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-address, .footer-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footer-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.footer-address a:hover, .footer-phone a:hover {
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.footer-bottom .credit a {
+    font-weight: 600;
+    color: var(--text-color);
+    border-bottom: 1px solid transparent;
+}
+
+.footer-bottom .credit a:hover {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+/* ==========================================================================
+   Responsive Styles (Desktops & Tablets)
+   ========================================================================== */
+@media (min-width: 768px) {
+    /* Header & Navigation desktop layout */
+    .menu-toggle {
+        display: none;
+    }
+    
+    .nav-menu {
+        position: static;
+        display: block;
+        width: auto;
+        background-color: transparent;
+        border-bottom: none;
+        padding: 0;
+        box-shadow: none;
+    }
+    
+    .nav-menu ul {
+        flex-direction: row;
+        gap: 2rem;
+    }
+    
+    .nav-link {
+        font-size: 0.95rem;
+    }
+    
+    /* Hero section */
+    .hero-section {
+        padding: 8rem 0;
+    }
+    
+    .hero-title {
+        font-size: 4.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.4rem;
+    }
+    
+    /* Layout grid for Horaires & Contact */
+    .hours-contact-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 4rem;
+        align-items: start;
+    }
+    
+    .btn-submit {
+        align-self: flex-start;
+        width: auto;
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+    
+    /* Footer */
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        padding-top: 1.5rem;
+        width: 100%;
+    }
+    
+    .footer-info {
+        max-width: 45%;
+    }
+}
